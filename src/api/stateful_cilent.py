@@ -32,7 +32,8 @@ class StatefulClient(object):
         state['name'] = self.api_name
         state['state_path'] = self.state_path
         state['request_count'] = 0
-        state['request_limit'] = None
+        state['request_limit'] = 10000
+        state['all_requests'] = list()
         return state
 
     def _save_state(self):
@@ -41,3 +42,30 @@ class StatefulClient(object):
         pickle.dump(self.state, IO)
         IO.close()
 
+    def _update_request_count(self):
+        if self.state['request_count'] + 1 > self.state['request_limit']:
+            err_msg = 'Max request count reached!'
+            raise RuntimeError(err_msg)
+        self.state['request_count'] += 1
+
+    def get(self, **args):
+        self._update_request_count()
+
+        if args['url'] == "":
+            res = None
+        else:
+            res = requests.get(**args)
+
+        args['res'] = res
+        self.state['all_requests'].append(args)
+        self._save_state()
+        return res
+
+    def set_limit(self, limit):
+        self.state['request_limit'] = limit
+        self._save_state()
+
+    def reset_state(self, yes):
+        if yes is True:
+            self.state = self._init_state()
+            self._save_state()
