@@ -51,7 +51,7 @@ def parse_niche(page):
     place = dict()
     
     # Name
-    place['Name'] = page.xpath("//h1[@class='postcard__title']")[0].text_content()
+    place['Name'] = page.xpath("//h1[@class='postcard__title']")[0].text_content().replace(' Township', '').replace(' Boro', '')
     place['State'] = page.xpath("//ul[@class='profile-breadcrumbs']")[0].getchildren()[0].text_content()
     place['County'] = page.xpath("//ul[@class='profile-breadcrumbs']")[0].getchildren()[1].text_content()
     
@@ -100,6 +100,6 @@ for fp in save_path.iterdir():
 
 places_df = pd.DataFrame(places)
 
-places_df.duplicated('Name')
+places_df.duplicated('Name').sum()
 
-
+places_df.to_csv('../data/niche_analysis.csv', index=False)
