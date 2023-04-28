@@ -13,10 +13,11 @@ This allowed me to gain a more thorough understanding of each property and make 
 # Setup
 
 ```
-git clone https://michalos88/soko
+git clone https://michalos88/soko.git
 cd soko
 virtualenv venv
 echo source ./venv/bin/activate > .env
+source .env
 pip install -r requirements.txt
 ````
 
@@ -24,6 +25,7 @@ pip install -r requirements.txt
 If you want to also analyze your commute time, make sure to add your google api key to the `.env` file. 
 ```
 echo export google_api_key=YOUR_API_KEY >> .env
+source .env
 ```
 
 # The Process
