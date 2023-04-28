@@ -21,7 +21,7 @@ pip install -r requirements.txt
 ````
 
 ## Google Maps API
-If you want to also analyze the your commute time, make sure to add your google api key to the `.env` file. 
+If you want to also analyze your commute time, make sure to add your google api key to the `.env` file. 
 ```
 echo export google_api_key=YOUR_API_KEY >> .env
 ```
