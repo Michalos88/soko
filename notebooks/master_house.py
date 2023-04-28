@@ -27,7 +27,7 @@ master = pd.merge(houses, places, on=['city','state_long'], how='left')
 
 master['price_per_sq'] = master['price']/master['size']
 
-# # Ordering 
+# # Ordering - We want to keep the order of houses - to see what's been added
 
 initial_ordering = pd.read_csv('../data/initial_ordering.csv')
 
@@ -74,10 +74,10 @@ def get_distances(origins, destinations, arrival=None, departure=None, max_req=1
     dest_idx = 0
     req_count = 0
     distances = list()
-    
+
     if arrival is not None and departure is not None:
         raise RuntimeError('Use either arrival or departuere')
-    
+
     while dest_idx < len(destinations) and req_count < max_req:
         next_idx = min(len(destinations), dest_idx+limit)
 
@@ -92,7 +92,7 @@ def get_distances(origins, destinations, arrival=None, departure=None, max_req=1
 
         distances.append(cur_distances)
         dest_idx = next_idx
-        req_count += 1 
+        req_count += 1
     return distances
 
 
@@ -129,7 +129,7 @@ if len(destinations) > 0 and weekend_commute:
 
             distance_text.append(req['rows'][0]['elements'][addr_idx]['distance']['text'])
             distance_value.append(req['rows'][0]['elements'][addr_idx]['distance']['value'])
-    
+
     new_commute = pd.DataFrame([
         destinations,
         addresses,
@@ -141,7 +141,7 @@ if len(destinations) > 0 and weekend_commute:
         distance_value
         ]
     ).T
-    
+
     new_commute.columns=[
             'full_address',
             'found_addresses',
@@ -152,7 +152,7 @@ if len(destinations) > 0 and weekend_commute:
             'distance_text',
             'distance_value'
         ]
-    
+
     commute = pd.concat([commute, new_commute])
     commute.to_csv('../data/commute_times.csv', index=False)
 

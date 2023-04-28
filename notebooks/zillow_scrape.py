@@ -33,10 +33,10 @@ def load_page(fp):
     return html.fromstring(page)
 
 
-def parse(page): 
+def parse(page):
     place = dict()
-    
-    # Summary 
+
+    # Summary
     summary = page.xpath("//div[@class='summary-container']")[0]
     place['full_address'] = summary.xpath('//h1')[0].text_content().replace('\xa0', ' ')
     place['city'] = place['full_address'].split(', ')[1]
@@ -46,8 +46,8 @@ def parse(page):
     place['beds'] = page.xpath("//span[@data-testid='bed-bath-item']")[0].text_content()
     place['baths'] = page.xpath("//span[@data-testid='bed-bath-item']")[1].text_content()
     place['size'] = page.xpath("//span[@data-testid='bed-bath-item']")[2].text_content()
-    
-    # Data View 
+
+    # Data View
     overview = page.xpath('//div[@class="data-view-container"]')[0]
     overview_summary = overview.xpath(
         "//ul[@class='zsg-tooltip-viewport']")[
@@ -62,15 +62,13 @@ def parse(page):
 
     if not does_include_sqft and not does_include_acres:
        place['lot'] = ''
-        
+
 
     return place
 
 import re
 
-save_path = Path('/Users/avogardo/Downloads/')
-
-path = Path(save_path/Path('10 Laurel Lane, Huguenot, NY 12746 _ MLS #H6220082 _ Zillow.html'))
+save_path = Path('../data/raw/zillow/')
 
 places = list()
 for fp in save_path.iterdir():
