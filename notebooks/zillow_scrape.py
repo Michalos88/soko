@@ -12,8 +12,8 @@
 #     name: fin2
 # ---
 
+import re
 from lxml import html
-import requests as r
 from pathlib import Path
 import pandas as pd
 
@@ -66,7 +66,6 @@ def parse(page):
 
     return place
 
-import re
 
 save_path = Path('../data/raw/zillow/')
 

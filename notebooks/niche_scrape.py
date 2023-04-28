@@ -13,7 +13,6 @@
 # ---
 
 from lxml import html
-import requests as r
 from pathlib import Path
 import pandas as pd
 

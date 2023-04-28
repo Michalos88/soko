@@ -11,6 +11,8 @@
 #     language: python
 #     name: soko
 # ---
+import os
+import datetime
 
 import pandas as pd
 import numpy as np
@@ -42,10 +44,6 @@ master = master.rename({'index': 'No'}, axis=1)
 master[['No', 'full_address']].to_csv('../data/initial_ordering.csv', index='False')
 
 # # Google API
-
-import googlemaps
-import os
-import datetime
 
 # ### Load
 
